@@ -6,14 +6,12 @@ set(CMAKE_CXX_STANDARD 14)
 set(socket_head
     socket/tcp/TcpClass.h
 
-    socket/udp/UdpClass.h
     socket/udp/UdpServer.h
     socket/udp/UdpClient.h
 )
 set(socket_src
     socket/tcp/TcpClass.cpp
 
-    socket/udp/UdpClass.cpp
     socket/udp/UdpServer.cpp
     socket/udp/UdpClient.cpp
 )
