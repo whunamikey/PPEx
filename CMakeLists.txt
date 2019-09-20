@@ -18,19 +18,21 @@ set(socket_src
 
 set(proto_head
     proto/Message.h
-        )
+    )
 
 set(proto_src
     proto/Message.cpp
-        )
+    )
 
 set(pack_head
-        pack/Endpoint.h
-        )
+    pack/Endpoint.h
+    pack/EndpointManager.h
+    )
 
 set(pack_src
-        pack/Endpoint.cpp
-        )
+    pack/Endpoint.cpp
+    pack/EndpointManager.cpp
+    )
 
 set(HEADS
     ${socket_head}
@@ -42,7 +44,7 @@ set(SRCS
     ${socket_src}
     ${proto_src}
     ${pack_src}
-        )
+    )
 
 add_executable(PPEx
         ${HEADS}
