@@ -3,20 +3,48 @@ project(PPEx)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOCKET_HEAD
+set(socket_head
     socket/tcp/TcpClass.h
 
     socket/udp/UdpClass.h
     socket/udp/UdpServer.h
 )
-set(SOCKET_SRC
+set(socket_src
     socket/tcp/TcpClass.cpp
 
     socket/udp/UdpClass.cpp
     socket/udp/UdpServer.cpp
 )
 
+set(proto_head
+    proto/Message.h
+        )
+
+set(proto_src
+    proto/Message.cpp
+        )
+
+set(pack_head
+        pack/Endpoint.h
+        )
+
+set(pack_src
+        pack/Endpoint.cpp
+        )
+
+set(HEADS
+    ${socket_head}
+    ${proto_head}
+    ${pack_head}
+   )
+
+set(SRCS
+    ${socket_src}
+    ${proto_src}
+    ${pack_src}
+        )
+
 add_executable(PPEx
-        main.cpp
-        socket/udp/UdpServer.h
-        socket/udp/UdpServer.cpp)
+        ${HEADS}
+        ${SRCS}
+        main.cpp)
