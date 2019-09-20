@@ -8,12 +8,6 @@
 
 using namespace std;
 
-struct _EnpointList{
-    Endpoint endpoint;
-    _EnpointList *next;
-};
-typedef _EnpointList eplist;
-
 class EndpointManager {
 public:
     EndpointManager();
@@ -23,16 +17,16 @@ public:
     int getEndpointCount();
     void printEps();
     void destroyEps();
-
+    Endpoint* getHead();
 private:
     void eplist_create();
-    void eplist_destroy(eplist* head);
+    void eplist_destroy(Endpoint* head);
     int eplist_add(Endpoint ep);
     int eplist_remove(Endpoint ep);
     int eplist_count();
     void eplist_dump();
 private:
-    eplist *head;
+    Endpoint *head;
 };
 
 

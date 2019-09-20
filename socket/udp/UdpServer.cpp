@@ -75,12 +75,36 @@ void UdpServer::deal_message(int sock, Endpoint peer, Message msg) {
         case MSG_TYPE_LIST:
             {
                 char text[SEND_BUFSIZE - MSG_HEADLEN] = {0};
-                vector<Endpoint>::iterator peerIt;
-                for (peerIt = peers.begin();peerIt != peers.end();peerIt ++){
-
-                }
+//                vector<Endpoint>::iterator peerIt;
+//                for (peerIt = peers.begin();peerIt != peers.end();peerIt ++){
+//
+//                }
+                break;
+            }
+        case MSG_TYPE_PING:
+            {
+                send_text(sock,peer,MSG_TYPE_PONG,NULL);
                 break;
             }
     }
+}
 
+int UdpServer::send_text(int sock, Endpoint peer, MsgType type, const char *txt) {
+    unsigned int len = txt == NULL ? 0 : strlen(txt);
+    return send_buf(sock,peer,type,txt,len);
+}
+
+int UdpServer::send_buf(int sock, Endpoint peer, MsgType type, const char *txt, unsigned int len) {
+    Message m;
+    m.version = MSG_VERSION;
+    m.type = type;
+    m.length = len;
+    m.content = txt;
+    return send_msg(sock,peer,m);
+}
+
+int UdpServer::send_msg(int sock, Endpoint peer, Message msg) {
+    char buf[SEND_BUFSIZE] = {0};
+    int size = msg.msg_pack(msg,buf,SEND_BUFSIZE);
+    return sendto(sock,buf,size,MSG_DONTWAIT,(struct sockaddr *)&peer.endpoint,sizeof(peer.endpoint));
 }

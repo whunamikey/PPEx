@@ -27,11 +27,11 @@ void EndpointManager::destroyEps() {
 }
 
 void EndpointManager::eplist_create() {
-    head = static_cast<eplist *>(malloc(sizeof(eplist)));
+    head = new Endpoint();
     head->next = NULL;
 }
 
-void EndpointManager::eplist_destroy(eplist *head) {
+void EndpointManager::eplist_destroy(Endpoint *head) {
     if (head == NULL)
         return;
     eplist_destroy(head->next);
@@ -40,15 +40,12 @@ void EndpointManager::eplist_destroy(eplist *head) {
 }
 
 int EndpointManager::eplist_add(Endpoint ep) {
-    eplist *cur;
+    Endpoint *cur;
     for (cur = head;cur != NULL;cur = cur->next){
-        if (cur != head && ep.ep_equal(ep,cur->endpoint)){
+        if (cur != head && ep.ep_equal(ep,*cur)){
             return 1;
         }else if (cur->next == NULL){
-            eplist *newep = static_cast<eplist*>(malloc(sizeof(eplist)));
-            newep->endpoint = ep;
-            newep->next = NULL;
-            cur->next = newep;
+            cur->next = &ep;
             return 1;
         }
     }
@@ -56,10 +53,10 @@ int EndpointManager::eplist_add(Endpoint ep) {
 }
 
 int EndpointManager::eplist_remove(Endpoint ep) {
-    eplist* cur;
+    Endpoint* cur;
     for (cur = head;cur != NULL && cur->next != NULL;cur = cur->next){
-        if (ep.ep_equal(ep,cur->next->endpoint)){
-            eplist *tmp = cur->next;
+        if (ep.ep_equal(ep,*cur)){
+            Endpoint *tmp = cur->next;
             cur->next = tmp->next;
             free(tmp);
             return 1;
@@ -70,7 +67,7 @@ int EndpointManager::eplist_remove(Endpoint ep) {
 
 int EndpointManager::eplist_count() {
     int i =0;
-    for (eplist* cur = head;cur != NULL;cur = cur->next){
+    for (Endpoint* cur = head;cur != NULL;cur = cur->next){
         i++;
     }
     return i;
@@ -79,7 +76,11 @@ int EndpointManager::eplist_count() {
 void EndpointManager::eplist_dump() {
     if (head == NULL)
         return;
-    for (eplist* cur = head->next;cur != NULL;cur = cur->next){
-        cout << cur->endpoint.ep_tostring(cur->endpoint) << cur->next ? "->" : "\n";
+    for (Endpoint* cur = head->next;cur != NULL;cur = cur->next){
+        cout << cur->ep_tostring(*cur) << cur->next ? "->" : "\n";
     }
+}
+
+Endpoint* EndpointManager::getHead() {
+    return head;
 }

@@ -10,6 +10,9 @@
 
 using namespace std;
 
+#define SEND_BUFSIZE 1024
+#define RECV_BUFSIZE 1024
+
 #define MSG_VLEN 2
 #define MSG_TYPELEN 2
 #define MSG_BODYLEN 4

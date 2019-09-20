@@ -21,19 +21,18 @@ using namespace std;
 #define UDP_ADDR "0.0.0.0"
 #define UDP_PORT 9123
 
-#define SEND_BUFSIZE 1024
-#define RECV_BUFSIZE 1024
 
 class UdpServer {
 public:
     UdpServer();
     ~UdpServer();
     int start();
-    void send_text(int sock,Endpoint peer,MsgType type,const char* txt);
+    int send_text(int sock,Endpoint peer,MsgType type,const char* txt);
 private:
     void receive_loop(int sock);
     void deal_message(int sock,Endpoint peer,Message msg);
-
+    int send_buf(int sock,Endpoint peer,MsgType type,const char* txt, unsigned int len);
+    int send_msg(int sock,Endpoint peer,Message msg);
 private:
     vector<Endpoint> peers;
 };

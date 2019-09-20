@@ -24,6 +24,7 @@ public:
 
 public:
     endpoint_t endpoint;
+    Endpoint *next;
 };
 
 

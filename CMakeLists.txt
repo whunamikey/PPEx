@@ -8,43 +8,45 @@ set(socket_head
 
     socket/udp/UdpClass.h
     socket/udp/UdpServer.h
+    socket/udp/UdpClient.h
 )
 set(socket_src
     socket/tcp/TcpClass.cpp
 
     socket/udp/UdpClass.cpp
     socket/udp/UdpServer.cpp
+    socket/udp/UdpClient.cpp
 )
 
 set(proto_head
     proto/Message.h
-    )
+)
 
 set(proto_src
     proto/Message.cpp
-    )
+)
 
 set(pack_head
     pack/Endpoint.h
     pack/EndpointManager.h
-    )
+)
 
 set(pack_src
     pack/Endpoint.cpp
     pack/EndpointManager.cpp
-    )
+)
 
 set(HEADS
     ${socket_head}
     ${proto_head}
     ${pack_head}
-   )
+)
 
 set(SRCS
     ${socket_src}
     ${proto_src}
     ${pack_src}
-    )
+)
 
 add_executable(PPEx
         ${HEADS}
